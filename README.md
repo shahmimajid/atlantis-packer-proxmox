@@ -23,6 +23,7 @@ This repository provides a streamlined, production-ready setup for running [Atla
 git clone <your-repo>
 cd atlantis-packer
 make setup
+```
 
 ### 2. Configure Environment
 
@@ -30,6 +31,7 @@ Edit the .env file with your actual values:
 
 ```bash
 vim .env
+```
 
 Required variables include:
 
@@ -42,6 +44,7 @@ Required variables include:
 
 ```bash
 make setup
+```
 
 This will:
 
@@ -64,7 +67,7 @@ make shell         # Open shell in container
 make test          # Test Packer installation
 make clean         # Clean up images and containers
 make push          # Build and push to registry (optional)
-
+```
 ---
 
 ## Usage
