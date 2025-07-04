@@ -42,35 +42,35 @@ push: build ## Build and push image to registry
 
 start: build ## Build image and start Atlantis
 	@echo "Starting Atlantis..."
-	docker-compose up -d
+	docker compose up -d
 	@echo "Atlantis started successfully"
 	@echo "Access Atlantis at: $(ATLANTIS_URL)"
 
 stop: ## Stop Atlantis
 	@echo "Stopping Atlantis..."
-	docker-compose down
+	docker compose down
 	@echo "Atlantis stopped"
 
 restart: stop start ## Restart Atlantis
 
 logs: ## Show Atlantis logs
-	docker-compose logs -f atlantis
+	docker compose logs -f atlantis
 
 status: ## Show Atlantis status
-	docker-compose ps
+	docker compose ps
 
 clean: ## Clean up Docker images and containers
 	@echo "Cleaning up..."
-	docker-compose down -v
+	docker compose down -v
 	docker rmi $(FULL_IMAGE_NAME) 2>/dev/null || true
 	docker system prune -f
 	@echo "Cleanup complete"
 
 shell: ## Open shell in running Atlantis container
-	docker-compose exec atlantis /bin/bash
+	docker compose exec atlantis /bin/bash
 
 test: ## Test Packer installation in container
-	docker-compose exec atlantis packer version
+	docker compose exec atlantis packer version
 
 # Development targets
 dev-build: ## Build without cache for development
