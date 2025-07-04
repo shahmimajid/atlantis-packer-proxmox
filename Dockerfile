@@ -1,9 +1,9 @@
 FROM runatlantis/atlantis:latest
 
-# Install dependencies
-RUN apt-get update && \
-    apt-get install -y wget unzip curl && \
-    rm -rf /var/lib/apt/lists/*
+# Install dependencies (Alpine Linux uses apk, not apt-get)
+RUN apk update && \
+    apk add --no-cache wget unzip curl && \
+    rm -rf /var/cache/apk/*
 
 # Install Packer
 ENV PACKER_VERSION=1.13.1
@@ -17,6 +17,6 @@ RUN wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER
 RUN packer version
 
 # Optional: Install additional tools
-# RUN apt-get update && apt-get install -y ansible jq && rm -rf /var/lib/apt/lists/*
+# RUN apk add --no-cache ansible jq
 
 USER atlantis
