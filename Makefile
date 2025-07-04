@@ -77,4 +77,4 @@ dev-build: ## Build without cache for development
 	docker build --no-cache -t $(FULL_IMAGE_NAME) .
 
 dev-start: dev-build ## Build and start in development mode
-	docker-compose up
+	docker compose up
