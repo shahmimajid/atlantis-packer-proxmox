@@ -1,0 +1,22 @@
+# Environment variables
+.env
+
+# Docker
+.docker/
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Packer
+packer_cache/
+*.box
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

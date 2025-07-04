@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  atlantis:
+    image: ${ATLANTIS_IMAGE:-atlantis-packer:latest}
+    container_name: atlantis-packer
+    ports:
+      - "${ATLANTIS_PORT:-4141}:4141"
+    environment:
+      # Atlantis configuration
+      - ATLANTIS_ATLANTIS_URL=${ATLANTIS_URL}
+      - ATLANTIS_GH_USER=${GITHUB_USERNAME}
+      - ATLANTIS_GH_TOKEN=${GITHUB_TOKEN}
+      - ATLANTIS_GH_WEBHOOK_SECRET=${GITHUB_WEBHOOK_SECRET}
+      - ATLANTIS_REPO_ALLOWLIST=${REPO_ALLOWLIST}
+      
+      # Proxmox credentials
+      - TF_VAR_proxmox_password=${PROXMOX_PASSWORD}
+      
+      # MinIO/S3 credentials
+      - AWS_ACCESS_KEY_ID=${MINIO_ACCESS_KEY}
+      - AWS_SECRET_ACCESS_KEY=${MINIO_SECRET_KEY}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      
+      # SSH key for VMs
+      - TF_VAR_ssh_public_key=${SSH_PUBLIC_KEY}
+      
+      # Packer variables
+      - PROXMOX_API_URL=${PROXMOX_API_URL}
+      - PROXMOX_USERNAME=${PROXMOX_USERNAME}
+      - PROXMOX_PASSWORD=${PROXMOX_PASSWORD}
+      - PROXMOX_NODE=${PROXMOX_NODE}
+      - PROXMOX_STORAGE=${PROXMOX_STORAGE}
+    
+    volumes:
+      - atlantis-data:/atlantis-data
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4141/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  atlantis-data:
