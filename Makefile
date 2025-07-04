@@ -4,7 +4,7 @@ IMAGE_TAG := latest
 FULL_IMAGE_NAME := $(IMAGE_NAME):$(IMAGE_TAG)
 
 # Load environment variables
-include .env
+#include .env
 export
 
 # Registry variables (optional)
