@@ -3,7 +3,6 @@ projects:
   - name: packer-templates
     dir: packer
     workflow: packer
-    allow_custom_workflows: true
 
 workflows:
   packer:
