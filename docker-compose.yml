@@ -1,6 +1,12 @@
 version: '3.8'
 services:
   atlantis:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ATLANTIS_VERSION=${ATLANTIS_VERSION}
+        - PACKER_VERSION=${PACKER_VERSION}
     image: atlantis-packer:${ATLANTIS_VERSION}
     container_name: atlantis-packer
     ports:
