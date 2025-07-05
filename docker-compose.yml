@@ -40,9 +40,6 @@ services:
     volumes:
       - atlantis-data:/atlantis-data
     
-    command: >
-      server
-      --repo-config-allowed-overrides=workflow
     restart: unless-stopped
     
     healthcheck:
