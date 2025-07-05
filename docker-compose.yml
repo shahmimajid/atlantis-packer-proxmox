@@ -40,6 +40,10 @@ services:
     volumes:
       - atlantis-data:/atlantis-data
     
+    command: >
+      server
+      --repo-config=/etc/atlantis/repos.yaml
+    
     restart: unless-stopped
     
     healthcheck:

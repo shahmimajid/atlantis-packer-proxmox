@@ -1,6 +1,6 @@
 version: 3
 projects:
-  - name: packer-templates
+  - name: custom-packer
     dir: packer
     workflow: packer
 
