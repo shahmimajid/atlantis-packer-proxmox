@@ -1,0 +1,22 @@
+version: 3
+projects:
+  - name: custom-packer
+    dir: packer
+    workflow: packer
+
+workflows:
+  packer:
+    plan:
+      steps:
+        - run: packer init .
+        - run: packer validate .
+    apply:
+      steps:
+        - run: |
+            packer build \
+              -var "proxmox_api_url=$PROXMOX_API_URL" \
+              -var "proxmox_username=$PROXMOX_USERNAME" \
+              -var "proxmox_password=$PROXMOX_PASSWORD" \
+              -var "proxmox_node=$PROXMOX_NODE" \
+              -var "proxmox_storage=$PROXMOX_STORAGE" \
+              .

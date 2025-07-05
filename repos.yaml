@@ -1,22 +1,15 @@
 repos:
   - id: /.*/
-    workflow: packer
+    workflow: default
     allowed_overrides: [workflow]
     allow_custom_workflows: true
 
 workflows:
-  packer:
+  default:
     plan:
       steps:
-        - run: packer init .
-        - run: packer validate .
+        - init
+        - plan
     apply:
       steps:
-        - run: |
-            packer build \
-              -var "proxmox_api_url=$PROXMOX_API_URL" \
-              -var "proxmox_username=$PROXMOX_USERNAME" \
-              -var "proxmox_password=$PROXMOX_PASSWORD" \
-              -var "proxmox_node=$PROXMOX_NODE" \
-              -var "proxmox_storage=$PROXMOX_STORAGE" \
-              .
+        - apply
