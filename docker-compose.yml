@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   atlantis:
-    image: ${ATLANTIS_IMAGE:-atlantis-packer:latest}
+    image: atlantis-packer:${ATLANTIS_VERSION}
     container_name: atlantis-packer
     ports:
       - "${ATLANTIS_PORT:-4141}:4141"
@@ -34,6 +34,9 @@ services:
     volumes:
       - atlantis-data:/atlantis-data
     
+    command: >
+      server
+      --repo-config-allowed-overrides=workflow
     restart: unless-stopped
     
     healthcheck:
