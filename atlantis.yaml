@@ -1,15 +1,10 @@
 version: 3
-repos:
-  - id: /.*/
-    branch: /.*/
-    workflow: packer
-    allowed_overrides: [workflow]
-    allow_custom_workflows: true
-
 projects:
   - name: packer-templates
     dir: packer
     workflow: packer
+    allowed_overrides: [workflow]
+    allow_custom_workflows: true
 
 workflows:
   packer:
