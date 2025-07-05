@@ -1,7 +1,13 @@
 version: '3.8'
 services:
   atlantis:
-    image: ${ATLANTIS_IMAGE:-atlantis-packer:latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ATLANTIS_VERSION=${ATLANTIS_VERSION}
+        - PACKER_VERSION=${PACKER_VERSION}
+    image: atlantis-packer:${ATLANTIS_VERSION}
     container_name: atlantis-packer
     ports:
       - "${ATLANTIS_PORT:-4141}:4141"
@@ -30,9 +36,6 @@ services:
       - PROXMOX_PASSWORD=${PROXMOX_PASSWORD}
       - PROXMOX_NODE=${PROXMOX_NODE}
       - PROXMOX_STORAGE=${PROXMOX_STORAGE}
-    command: >
-      server
-      --repo-config-allowed-overrides=workflow
     
     volumes:
       - atlantis-data:/atlantis-data

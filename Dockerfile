@@ -1,22 +1,28 @@
-FROM runatlantis/atlantis:latest
+# Define build arguments before FROM (for FROM instruction)
+ARG ATLANTIS_VERSION
+ARG PACKER_VERSION
 
-# Install dependencies (Alpine Linux uses apk, not apt-get)
+FROM ghcr.io/runatlantis/atlantis:${ATLANTIS_VERSION}
+
+# Re-declare ARG after FROM to make it available for RUN instructions
+ARG PACKER_VERSION
+
+# Switch to root to install dependencies
+USER root
+
+# Install dependencies (Alpine Linux syntax)
 RUN apk update && \
-    apk add --no-cache wget unzip curl && \
-    rm -rf /var/cache/apk/*
+    apk add --no-cache wget unzip curl
 
-# Install Packer
-ENV PACKER_VERSION=1.13.1
+# Install Packer using build argument (now PACKER_VERSION is available)
 RUN wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip && \
     unzip packer_${PACKER_VERSION}_linux_amd64.zip && \
     mv packer /usr/local/bin/ && \
     rm packer_${PACKER_VERSION}_linux_amd64.zip && \
     chmod +x /usr/local/bin/packer
 
-# Verify installation
-RUN packer version
+# Verify installations
+RUN atlantis version && packer version
 
-# Optional: Install additional tools
-# RUN apk add --no-cache ansible jq
-
+# Switch back to atlantis user for security
 USER atlantis
