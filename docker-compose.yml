@@ -30,9 +30,6 @@ services:
       - PROXMOX_PASSWORD=${PROXMOX_PASSWORD}
       - PROXMOX_NODE=${PROXMOX_NODE}
       - PROXMOX_STORAGE=${PROXMOX_STORAGE}
-    command: >
-      server
-      --repo-config-allowed-overrides=workflow
     
     volumes:
       - atlantis-data:/atlantis-data
