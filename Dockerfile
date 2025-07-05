@@ -24,5 +24,8 @@ RUN wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER
 # Verify installations
 RUN atlantis version && packer version
 
+# Add your server-side Atlantis repo config
+COPY repos.yaml /etc/atlantis/repos.yaml
+
 # Switch back to atlantis user for security
 USER atlantis
